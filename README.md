@@ -7,7 +7,7 @@ My first ever project :
 
 Quirks Implemented:
 - SHIFTING -> Using Vy
-- MEMORY -> Increasing Imdex
+- MEMORY -> Increasing Index
 - JUMP
 
 Using:
