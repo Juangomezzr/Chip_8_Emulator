@@ -1,4 +1,4 @@
-# Install script for directory: E:/VSCode/Chip-8
+# Install script for directory: E:/VSCode/C
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -39,7 +39,7 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("E:/VSCode/Chip-8/cmake-build-debug/vendor/SDL/cmake_install.cmake")
+  include("E:/VSCode/C/cmake-build-debug/vendor/SDL/cmake_install.cmake")
 endif()
 
 if(CMAKE_INSTALL_COMPONENT)
@@ -50,5 +50,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "E:/VSCode/Chip-8/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "E:/VSCode/C/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

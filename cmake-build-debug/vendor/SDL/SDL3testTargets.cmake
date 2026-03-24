@@ -59,7 +59,7 @@ set_target_properties(SDL3::SDL3_test PROPERTIES
 set_property(TARGET SDL3::SDL3_test APPEND PROPERTY IMPORTED_CONFIGURATIONS DEBUG)
 set_target_properties(SDL3::SDL3_test PROPERTIES
   IMPORTED_LINK_INTERFACE_LANGUAGES_DEBUG "C"
-  IMPORTED_LOCATION_DEBUG "E:/VSCode/Chip-8/cmake-build-debug/vendor/SDL/libSDL3_test.a"
+  IMPORTED_LOCATION_DEBUG "E:/VSCode/C/cmake-build-debug/vendor/SDL/libSDL3_test.a"
   )
 
 # Make sure the targets which have been exported in some other

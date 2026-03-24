@@ -393,7 +393,7 @@ init_audio();
 
                 if (ImGui::BeginMenuBar()) {
                     if(ImGui::BeginMenu("Files")){
-                        IGFD::FileDialogConfig config;config.path = "roms";
+                        IGFD::FileDialogConfig config;config.path = "../roms";
                         ImGuiFileDialog::Instance()->OpenDialog("ChooseFileDlgKey", "Choose File", ".ch8", config);
                         ImGui::EndMenu();
                     }

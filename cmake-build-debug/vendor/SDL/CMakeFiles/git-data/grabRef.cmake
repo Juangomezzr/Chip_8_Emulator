@@ -17,27 +17,27 @@
 
 set(HEAD_HASH)
 
-file(READ "E:/VSCode/Chip-8/cmake-build-debug/vendor/SDL/CMakeFiles/git-data/HEAD" HEAD_CONTENTS LIMIT 1024)
+file(READ "E:/VSCode/C/cmake-build-debug/vendor/SDL/CMakeFiles/git-data/HEAD" HEAD_CONTENTS LIMIT 1024)
 
 string(STRIP "${HEAD_CONTENTS}" HEAD_CONTENTS)
 if(HEAD_CONTENTS MATCHES "ref")
 	# named branch
 	string(REPLACE "ref: " "" HEAD_REF "${HEAD_CONTENTS}")
-	if(EXISTS "E:/VSCode/Chip-8/.git/${HEAD_REF}")
-		configure_file("E:/VSCode/Chip-8/.git/${HEAD_REF}" "E:/VSCode/Chip-8/cmake-build-debug/vendor/SDL/CMakeFiles/git-data/head-ref" COPYONLY)
+	if(EXISTS "E:/VSCode/C/.git/${HEAD_REF}")
+		configure_file("E:/VSCode/C/.git/${HEAD_REF}" "E:/VSCode/C/cmake-build-debug/vendor/SDL/CMakeFiles/git-data/head-ref" COPYONLY)
 	else()
-		configure_file("E:/VSCode/Chip-8/.git/packed-refs" "E:/VSCode/Chip-8/cmake-build-debug/vendor/SDL/CMakeFiles/git-data/packed-refs" COPYONLY)
-		file(READ "E:/VSCode/Chip-8/cmake-build-debug/vendor/SDL/CMakeFiles/git-data/packed-refs" PACKED_REFS)
+		configure_file("E:/VSCode/C/.git/packed-refs" "E:/VSCode/C/cmake-build-debug/vendor/SDL/CMakeFiles/git-data/packed-refs" COPYONLY)
+		file(READ "E:/VSCode/C/cmake-build-debug/vendor/SDL/CMakeFiles/git-data/packed-refs" PACKED_REFS)
 		if(${PACKED_REFS} MATCHES "([0-9a-z]*) ${HEAD_REF}")
 			set(HEAD_HASH "${CMAKE_MATCH_1}")
 		endif()
 	endif()
 else()
 	# detached HEAD
-	configure_file("E:/VSCode/Chip-8/.git/HEAD" "E:/VSCode/Chip-8/cmake-build-debug/vendor/SDL/CMakeFiles/git-data/head-ref" COPYONLY)
+	configure_file("E:/VSCode/C/.git/HEAD" "E:/VSCode/C/cmake-build-debug/vendor/SDL/CMakeFiles/git-data/head-ref" COPYONLY)
 endif()
 
 if(NOT HEAD_HASH)
-	file(READ "E:/VSCode/Chip-8/cmake-build-debug/vendor/SDL/CMakeFiles/git-data/head-ref" HEAD_HASH LIMIT 1024)
+	file(READ "E:/VSCode/C/cmake-build-debug/vendor/SDL/CMakeFiles/git-data/head-ref" HEAD_HASH LIMIT 1024)
 	string(STRIP "${HEAD_HASH}" HEAD_HASH)
 endif()

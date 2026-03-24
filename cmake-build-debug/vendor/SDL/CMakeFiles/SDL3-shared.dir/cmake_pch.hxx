@@ -2,5 +2,5 @@
 
 #pragma GCC system_header
 #ifdef __cplusplus
-#include "E:/VSCode/Chip-8/vendor/SDL/src/SDL_internal.h"
+#include "E:/VSCode/C/vendor/SDL/src/SDL_internal.h"
 #endif // __cplusplus

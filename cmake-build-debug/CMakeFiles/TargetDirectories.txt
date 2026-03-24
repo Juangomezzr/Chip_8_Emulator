@@ -1,8 +1,8 @@
-E:/VSCode/Chip-8/cmake-build-debug/CMakeFiles/Chip-8.dir
-E:/VSCode/Chip-8/cmake-build-debug/CMakeFiles/edit_cache.dir
-E:/VSCode/Chip-8/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-E:/VSCode/Chip-8/cmake-build-debug/vendor/SDL/CMakeFiles/SDL3-shared.dir
-E:/VSCode/Chip-8/cmake-build-debug/vendor/SDL/CMakeFiles/SDL3_test.dir
-E:/VSCode/Chip-8/cmake-build-debug/vendor/SDL/CMakeFiles/SDL_uclibc.dir
-E:/VSCode/Chip-8/cmake-build-debug/vendor/SDL/CMakeFiles/edit_cache.dir
-E:/VSCode/Chip-8/cmake-build-debug/vendor/SDL/CMakeFiles/rebuild_cache.dir
+E:/VSCode/C/cmake-build-debug/CMakeFiles/Chip-8.dir
+E:/VSCode/C/cmake-build-debug/CMakeFiles/edit_cache.dir
+E:/VSCode/C/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+E:/VSCode/C/cmake-build-debug/vendor/SDL/CMakeFiles/SDL3-shared.dir
+E:/VSCode/C/cmake-build-debug/vendor/SDL/CMakeFiles/SDL3_test.dir
+E:/VSCode/C/cmake-build-debug/vendor/SDL/CMakeFiles/SDL_uclibc.dir
+E:/VSCode/C/cmake-build-debug/vendor/SDL/CMakeFiles/edit_cache.dir
+E:/VSCode/C/cmake-build-debug/vendor/SDL/CMakeFiles/rebuild_cache.dir

@@ -1,4 +1,4 @@
-# Install script for directory: E:/VSCode/Chip-8/vendor/SDL
+# Install script for directory: E:/VSCode/C/vendor/SDL
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

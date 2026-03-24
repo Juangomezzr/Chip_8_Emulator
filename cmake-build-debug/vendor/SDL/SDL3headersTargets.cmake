@@ -54,7 +54,7 @@ unset(_cmake_expected_targets)
 add_library(SDL3::Headers INTERFACE IMPORTED)
 
 set_target_properties(SDL3::Headers PROPERTIES
-  INTERFACE_INCLUDE_DIRECTORIES "E:/VSCode/Chip-8/cmake-build-debug/vendor/SDL/include-revision;E:/VSCode/Chip-8/vendor/SDL/include"
+  INTERFACE_INCLUDE_DIRECTORIES "E:/VSCode/C/cmake-build-debug/vendor/SDL/include-revision;E:/VSCode/C/vendor/SDL/include"
 )
 
 # This file does not depend on other imported targets which have
