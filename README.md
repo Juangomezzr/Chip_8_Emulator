@@ -1,6 +1,6 @@
 # Chip-8 Emulator
 
-![Intro](img\img1)
+![Intro](img/img1.png)
 
 This is a Chip-8 emulator built with C++, SDL3, and ImGui, providing a graphical interface for playing Chip-8 ROMs and debugging their execution.
 
@@ -84,7 +84,7 @@ Follow these steps to build the emulator:
     The `debug_mode` flag in `AppConfig` (currently set to `true` in `main.cpp`) enables the "Asm" window, which shows the disassembly and allows memory editing when the emulator is stopped.
 
 
-[OpCodes](Images\Captura de pantalla 2026-03-24 181118.png)
+![OpCodes](img/img2.png)
 
 
 ## Chip-8 Quirks
