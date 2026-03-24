@@ -16,7 +16,7 @@ CMake Deprecation Warning:
 -- Platform: Windows-10.0.26200
 -- 64-bit:   TRUE
 -- Compiler: C:/Program Files/JetBrains/CLion 2023.2.2/bin/mingw/bin/gcc.exe
--- Revision: SDL3-3.3.0-1.0-14-gbc33815
+-- Revision: SDL3-3.3.0-1.0-17-ga3b98cd
 -- Vendor:   
 -- 
 -- Subsystems:
@@ -134,6 +134,6 @@ CMake Deprecation Warning:
 --  Build Shared Library: ON
 --  Build Static Library: OFF
 -- 
--- Configuring done (0.5s)
+-- Configuring done (0.6s)
 -- Generating done (0.3s)
 -- Build files have been written to: E:/VSCode/C/cmake-build-debug
