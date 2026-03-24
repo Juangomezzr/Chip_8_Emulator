@@ -1,6 +1,6 @@
 # Chip-8 Emulator
 
-![Intro](img\Captura de pantalla 2025-05-29 185816.png)
+![Intro](img\"Captura de pantalla 2025-05-29 185816.png")
 
 This is a Chip-8 emulator built with C++, SDL3, and ImGui, providing a graphical interface for playing Chip-8 ROMs and debugging their execution.
 
