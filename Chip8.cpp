@@ -44,7 +44,7 @@ Chip8::Chip8(const char rom_name[],Chip8configuration configuration) {
 
     memset(stack,0,sizeof(stack) );
     memset(display,0,sizeof(display));
-    memset(keyboard,0,sizeof (display));
+    memset(keyboard,0,sizeof(keyboard));
 
     //Load Font
     for (int i = 0; i<80;i++){
@@ -331,8 +331,9 @@ void Chip8::executeInst(){
             break;
         case  0x9:
             if(V[x]!=V[y]){
-                PC+2;
+                PC+=2;
             }
+            break;
 
         case    0xa:
             //ANNN I = NNN
@@ -496,4 +497,3 @@ void Chip8::executeInst(){
     }
 
 }
-

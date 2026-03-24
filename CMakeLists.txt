@@ -23,3 +23,12 @@ add_executable(${PROJECT_NAME}
 target_link_directories(${PROJECT_NAME} PUBLIC SDL3::SDL3)
 target_link_libraries(${PROJECT_NAME} PUBLIC  SDL3::SDL3)
 
+# Enlazar estáticamente las librerías estándar de C++ de MinGW y evitar errores de definición múltiple
+target_link_options(${PROJECT_NAME} PRIVATE -static-libgcc -static-libstdc++ "-Wl,--allow-multiple-definition")
+
+add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+    $<TARGET_RUNTIME_DLLS:${PROJECT_NAME}>
+    $<TARGET_FILE_DIR:${PROJECT_NAME}>
+    COMMAND_EXPAND_LISTS
+)

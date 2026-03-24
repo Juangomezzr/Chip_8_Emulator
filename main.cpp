@@ -16,7 +16,7 @@
 typedef struct configuration {
     int width = 1080;
     int height = 820;
-    const char *romSelected = nullptr;
+    std::string romSelected = "";
 
     bool debug_mode = true;
     int velocity = 1;//Numero de instrucciones por ciclo de while, el debug deja de mostrar las cosas correctamente
@@ -89,7 +89,7 @@ Chip8configuration configuration8;
 int main() {
 //----------------Inicializar_Chip---------------------
 
-    Chip8 _chip8 = Chip8(configuration.romSelected,configuration8);
+    Chip8 _chip8 = Chip8(configuration.romSelected.empty() ? nullptr : configuration.romSelected.c_str(), configuration8);
 
     //Stop program if error initializing CHIP_8
     if (_chip8.error) {
@@ -104,7 +104,7 @@ int main() {
         return -2;
     }
 
-    SDL_WindowFlags windowFlags = SDL_WINDOW_RESIZABLE;
+    SDL_WindowFlags windowFlags = (SDL_WindowFlags)(SDL_WINDOW_RESIZABLE | SDL_WINDOW_HIGH_PIXEL_DENSITY);
 
     Chip_8Window = SDL_CreateWindow("Chip-8", configuration.width, configuration.height, windowFlags);
 
@@ -348,12 +348,11 @@ init_audio();
 
             ///---------------DOCKSpace_Setup--------------------------
 
-            static ImGuiDockNodeFlags dockspace_flags =ImGuiDockNodeFlags_NoUndocking
-                    |ImGuiDockNodeFlags_PassthruCentralNode;
+            static ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_PassthruCentralNode | ImGuiDockNodeFlags_NoUndocking | ImGuiDockNodeFlags_NoResize;
 
             // We are using the ImGuiWindowFlags_NoDocking flag to make the parent window not dockable into,
             // because it would be confusing to have two docking targets within each others.
-            ImGuiWindowFlags main_window_flags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDocking|ImGuiWindowFlags_AlwaysAutoResize;
+            ImGuiWindowFlags main_window_flags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDocking;
 
 
             //Docked window param
@@ -367,7 +366,9 @@ init_audio();
             main_window_flags |= ImGuiWindowFlags_NoTitleBar // Quitar nombre, header, barra superior de la ventana
                             | ImGuiWindowFlags_NoCollapse //
                             |ImGuiWindowFlags_NoResize //Como sera siempre del tamaño del viewport no se podra cambiar el tamaño
-                            | ImGuiWindowFlags_NoMove; // pa que no se mueva
+                            | ImGuiWindowFlags_NoMove //
+                            | ImGuiWindowFlags_NoBringToFrontOnFocus // Evita que tape ventanas flotantes al hacer clic fuera
+                            | ImGuiWindowFlags_NoNavFocus;
 
             // Important: note that we proceed even if Begin() returns false (aka window is collapsed).
             // This is because we want to keep our DockSpace() active. If a DockSpace() is inactive,
@@ -382,6 +383,31 @@ init_audio();
 
             // Submit the DockSpace
             ImGuiID dockspace_id = ImGui::GetID("MyDockSpace");// Id unico no hace falta en este proyecto pero lo dejo
+
+            // Configurar el layout fijo programáticamente la primera vez
+            static bool init_dockspace = true;
+            if (init_dockspace) {
+                init_dockspace = false;
+                ImGui::DockBuilderRemoveNode(dockspace_id); // Limpiar memoria de layouts anteriores
+                ImGui::DockBuilderAddNode(dockspace_id, dockspace_flags | ImGuiDockNodeFlags_DockSpace);
+                ImGui::DockBuilderSetNodeSize(dockspace_id, viewport->WorkSize);
+
+                ImGuiID dock_main_id = dockspace_id;
+                
+                // 1. Separar la pantalla en Izquierda (Asm) y Derecha (Lo demás)
+                ImGuiID dock_id_left = ImGui::DockBuilderSplitNode(dock_main_id, ImGuiDir_Left, 0.30f, NULL, &dock_main_id);
+                
+                // 2. Del espacio derecho restante, separar en Arriba (Display) y Abajo (Registro)
+                ImGuiID dock_id_top_right = ImGui::DockBuilderSplitNode(dock_main_id, ImGuiDir_Up, 0.55f, NULL, &dock_main_id);
+                
+                if (configuration.debug_mode) {
+                    ImGui::DockBuilderDockWindow("Asm", dock_id_left);
+                }
+                ImGui::DockBuilderDockWindow("CHIP-8_Display", dock_id_top_right);
+                ImGui::DockBuilderDockWindow("Registro", dock_main_id); // dock_main_id ahora es el resto (abajo a la derecha)
+                ImGui::DockBuilderFinish(dockspace_id);
+            }
+
             ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f),
                              dockspace_flags);
             // Se puede hacer de otra forma mas simple con
@@ -393,8 +419,10 @@ init_audio();
 
                 if (ImGui::BeginMenuBar()) {
                     if(ImGui::BeginMenu("Files")){
-                        IGFD::FileDialogConfig config;config.path = "../roms";
-                        ImGuiFileDialog::Instance()->OpenDialog("ChooseFileDlgKey", "Choose File", ".ch8", config);
+                        if (ImGui::MenuItem("Choose File...")) {
+                            IGFD::FileDialogConfig config; config.path = "../roms";
+                            ImGuiFileDialog::Instance()->OpenDialog("ChooseFileDlgKey", "Choose File", ".ch8", config);
+                        }
                         ImGui::EndMenu();
                     }
                     if(ImGui::BeginMenu("Quirks")){
@@ -407,7 +435,7 @@ init_audio();
 
                         if(ImGui::Button("SHIFT [ 0x8XY6 and 0x8XY7 ]")){
                             configuration8.SHIFT = !configuration8.SHIFT;
-                            _chip8 = Chip8(configuration.romSelected,configuration8);
+                            _chip8 = Chip8(configuration.romSelected.empty() ? nullptr : configuration.romSelected.c_str(), configuration8);
                         }
                         ImGui::PopStyleColor();
 
@@ -418,7 +446,7 @@ init_audio();
                         }
                         if(ImGui::Button("JUMP [ BNNN ] ")){
                             configuration8.BNNN_quirk = !configuration8.BNNN_quirk;
-                            _chip8 = Chip8(configuration.romSelected,configuration8);
+                            _chip8 = Chip8(configuration.romSelected.empty() ? nullptr : configuration.romSelected.c_str(), configuration8);
                         }
                         ImGui::PopStyleColor();
 
@@ -431,7 +459,7 @@ init_audio();
                         }
                         if(ImGui::Button("MEM QUIRK [ Modify I ] ")){
                             configuration8.MEM_QUIRK = !configuration8.MEM_QUIRK;
-                            _chip8 = Chip8(configuration.romSelected,configuration8);
+                            _chip8 = Chip8(configuration.romSelected.empty() ? nullptr : configuration.romSelected.c_str(), configuration8);
                         }
                         ImGui::PopStyleColor();
                         ImGui::EndMenu();
@@ -439,20 +467,6 @@ init_audio();
 
 
                     ImGui::EndMenuBar();
-                    // display files
-                    if (ImGuiFileDialog::Instance()->Display("ChooseFileDlgKey")) { // => will show a dialog
-                        if (ImGuiFileDialog::Instance()->IsOk()) { // action if OK
-                            std::string filePathName = ImGuiFileDialog::Instance()->GetFilePathName();
-                            std::string filePath = ImGuiFileDialog::Instance()->GetCurrentPath();
-
-                            configuration.romSelected = filePathName.c_str();
-                            _chip8 = Chip8(configuration.romSelected,configuration8);
-                            // action
-                        }
-
-                        // close
-                        ImGuiFileDialog::Instance()->Close();
-                    }
                 }
 
 
@@ -567,7 +581,7 @@ ImGui::BeginGroup();
             ImGui::SameLine();
             if(ImGui::Button("Reset",ImVec2(50,30))&& stop){
 
-                    _chip8 = Chip8(configuration.romSelected,configuration8);
+                    _chip8 = Chip8(configuration.romSelected.empty() ? nullptr : configuration.romSelected.c_str(), configuration8);
 
 
             }
@@ -750,8 +764,7 @@ if(configuration.debug_mode) {
 
             ImGui::PopStyleColor(1);
                     ///----------Display-----------------
-                    ImGuiWindowFlags displayflags =
-                            ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoMove ;
+                    ImGuiWindowFlags displayflags = ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoMove;
 
                     // ImGui::SetNextWindowSize(ImVec2(64 * _chip8.config.scale,32 * _chip8.config.scale));
                     //ImGui::SetNextWindowSizeConstraints(ImVec2(64* _chip8.config.scale,32 * _chip8.config.scale),
@@ -766,6 +779,21 @@ if(configuration.debug_mode) {
                     }
                     ImGui::End();
             ImGui::End(); // Of the dockSpace begin
+
+            // display files (completamente fuera del layout principal del DockSpace)
+            if (ImGuiFileDialog::Instance()->Display("ChooseFileDlgKey", ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_NoSavedSettings, ImVec2(600, 400))) { // => will show a dialog
+                if (ImGuiFileDialog::Instance()->IsOk()) { // action if OK
+                    std::string filePathName = ImGuiFileDialog::Instance()->GetFilePathName();
+                    std::string filePath = ImGuiFileDialog::Instance()->GetCurrentPath();
+
+                    configuration.romSelected = filePathName;
+                    _chip8 = Chip8(configuration.romSelected.c_str(), configuration8);
+                    // action
+                }
+
+                // close
+                ImGuiFileDialog::Instance()->Close();
+            }
         }
 
         //-------------------------------
